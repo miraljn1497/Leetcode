@@ -33,22 +33,20 @@ public class LeetCodeProblems {
         return k; // k is the number of unique elements (modified array size)
     }
 
-    public void rotate(int[] nums, int k) {
+    public static void rotate(int[] nums, int k) {
         int n = nums.length;
-        k = k % n; // Handle k > n
-
-        if (k == 0) {
+        if (k == 0 || nums.length == 0) {
             return; // No rotation needed
         }
-
+        k = k % n; // Handle k > n
 
         // Method 2: In-place reversal (More efficient)
         reverse(nums, 0, n - k - 1); // Reverse the first part
         reverse(nums, n - k, n - 1); // Reverse the second part
-        reverse(nums, 0, n - 1);     // Reverse the entire array
+        reverse(nums, 0, n - 1);    // Reverse the entire array
     }
 
-    private void reverse(int[] nums, int start, int end) {
+    private static void reverse(int[] nums, int start, int end) {
         while (start < end) {
             int temp = nums[start];
             nums[start] = nums[end];
@@ -58,7 +56,7 @@ public class LeetCodeProblems {
         }
     }
 
-    public int maxProfit(int[] prices) {
+    public static int maxProfit(int[] prices) {
         int maxProfit = 0;
 
         for (int i = 1; i < prices.length; i++) {
@@ -72,40 +70,25 @@ public class LeetCodeProblems {
         return maxProfit;
     }
 
+    public static int binarySearchIterative(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
 
-    public void main(String[] args) {
-        int[] nums = {1, 2, 3, 4, 5, 6, 7};
-        int k = 3;
-        rotate(nums, k);
+        while (low <= high) {
+            int mid = low + (high - low) / 2; // Avoids potential overflow
 
-        System.out.print("Rotated array: ");
-        for (int num : nums) {
-            System.out.print(num + " ");
+            if (arr[mid] == target) {
+                return mid; // Target found
+            } else if (arr[mid] < target) {
+                low = mid + 1; // Search in the right half
+            } else {
+                high = mid - 1; // Search in the left half
+            }
         }
-        System.out.println();
-
-
-        int[] nums2 = {-1, -100, 3, 99};
-        int k2 = 2;
-        rotate(nums2, k2);
-
-        System.out.print("Rotated array: ");
-        for (int num : nums2) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
-
-        int[] nums3 = {1, 2};
-        int k3 = 3;
-        rotate(nums3, k3);
-        System.out.print("Rotated array: ");
-
-        int[] num4 = {1,1,1,2,2,3};
-        int  unique = removeDuplicates(num4);
-        System.out.print(unique);
-
-        int[] prices1 = {7, 1, 5, 3, 6, 4};
-        int profit1 = maxProfit(prices1);
-        System.out.println("Example 1 Profit: " + profit1);
+        return -1;
     }
+
 }
+
+
+
